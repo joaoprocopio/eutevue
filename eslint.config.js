@@ -1,5 +1,6 @@
 import { includeIgnoreFile } from '@eslint/compat'
 import js from '@eslint/js'
+import query from '@tanstack/eslint-plugin-query'
 import prettier from '@vue/eslint-config-prettier'
 import { defineConfig } from 'eslint/config'
 import importsort from 'eslint-plugin-simple-import-sort'
@@ -32,6 +33,7 @@ const config = defineConfig([
   },
   js.configs.recommended,
   ...pluginVue.configs['flat/essential'],
+  query.configs['flat/recommended'],
   prettier,
 ])
 
