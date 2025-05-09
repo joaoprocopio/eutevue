@@ -2,16 +2,17 @@ import { defineConfig, globalIgnores } from 'eslint/config'
 import globals from 'globals'
 import js from '@eslint/js'
 import pluginVue from 'eslint-plugin-vue'
-import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
+import prettier from '@vue/eslint-config-prettier'
+import { includeIgnoreFile } from '@eslint/compat'
+import path from 'path'
+import url from 'url'
+
+const __filename = url.fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+const __gitignore = path.resolve(__dirname, '.gitignore')
 
 export default defineConfig([
-  {
-    name: 'app/files-to-lint',
-    files: ['**/*.{js,mjs,jsx,vue}'],
-  },
-
-  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
-
+  includeIgnoreFile(__gitignore),
   {
     languageOptions: {
       globals: {
@@ -19,8 +20,7 @@ export default defineConfig([
       },
     },
   },
-
   js.configs.recommended,
   ...pluginVue.configs['flat/essential'],
-  skipFormatting,
+  prettier,
 ])
