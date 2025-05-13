@@ -1,11 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import { HomePageName } from '~/constants/routes'
+
 /** @type {import("vue-router").RouteRecordRaw[]} */
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: () => import('../pages/home-page.vue'),
+    name: HomePageName,
+    components: {
+      default: () => import('~/pages/home-page.vue'),
+      layout: () => import('~/layouts/default-layout.vue'),
+    },
   },
 ]
 
