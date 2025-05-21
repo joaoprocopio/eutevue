@@ -1,12 +1,22 @@
 <script setup>
-import { RouterView } from 'vue-router'
+import { computed, defineAsyncComponent } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const layoutFn = computed(() => route.meta.layoutFn)
+
+const Layout = computed(() =>
+  layoutFn.value
+    ? defineAsyncComponent({
+        loader: layoutFn.value,
+      })
+    : undefined,
+)
 </script>
 
 <template>
-  <RouterView v-slot="page">
-    <component :is="page.Component" />
-  </RouterView>
-  <!-- <RouterView name="layout" v-slot="layout">
-    <component :is="layout.Component">asdf</component>
-  </RouterView> -->
+  <Layout v-if="layoutFn">
+    <RouterView />
+  </Layout>
+  <RouterView v-else />
 </template>

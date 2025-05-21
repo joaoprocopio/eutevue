@@ -7,9 +7,9 @@ const routes = [
   {
     path: '/',
     name: HomePageName,
-    components: {
-      default: () => import('~/pages/home-page.vue'),
-      layout: () => import('~/layouts/default-layout.vue'),
+    component: () => import('~/pages/home-page'),
+    meta: {
+      layoutFn: () => import('~/layouts/default-layout'),
     },
   },
 ]

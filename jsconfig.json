@@ -4,8 +4,7 @@
     "types": ["vite/client"],
     "paths": {
       "~/*": ["./src/*"]
-    },
-    "checkJs": true
+    }
   },
   "exclude": ["node_modules", "dist"]
 }

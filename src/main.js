@@ -9,6 +9,11 @@ import { router } from '~/router'
 const app = createApp(App)
 
 app.use(router)
-app.use(VueQueryPlugin)
+app.use(
+  VueQueryPlugin,
+  /** @type {import("@tanstack/vue-query").VueQueryPluginOptions} */ ({
+    enableDevtoolsV6Plugin: true,
+  }),
+)
 
 app.mount('#app')
