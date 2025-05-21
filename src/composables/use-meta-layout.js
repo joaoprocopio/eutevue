@@ -17,6 +17,10 @@ export function useMetaLayout() {
 }
 
 /**
+ * Essa pequena função pode receber:
+ *    - funções para lazy import (`async (...) => await import(...)`);
+ *    - componentes importados, serão "short-circuitados" para serem renderizados diretamente;
+ *    - `undefined` ou `null` para caso você queira ocultar o layout para a determinada rota.
  * @param {Omit<import("vue").AsyncComponentOptions, "loader" | "suspensible">} options
  */
 function safeExtractComponent(component, options = {}) {
