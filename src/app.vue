@@ -1,33 +1,51 @@
 <script setup>
-import { computed, defineAsyncComponent, h } from 'vue'
+import { computed, defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
 
 import DevtoolsVueQuery from '~/components/devtools/vue-query'
 import { isComp, isFn, isNil } from '~/utils/is'
 
 const route = useRoute()
+
 const layout = computed(() => route.meta.layout)
-const Layout = computed(() => {
+const layoutLoading = computed(() => route.meta.layoutLoading)
+const layoutError = computed(() => route.meta.layoutError)
+
+const RouterLayout = computed(() =>
+  safeExtractComponent(layout.value, {
+    loadingComponent: safeExtractComponent(layoutLoading.value),
+    errorComponent: safeExtractComponent(layoutError.value),
+  }),
+)
+
+/**
+ * @param {Omit<import("vue").AsyncComponentOptions, "loader" | "suspensible">} options
+ */
+function safeExtractComponent(component, options = {}) {
   switch (true) {
-    case isNil(layout.value):
+    case isNil(component):
       return undefined
-    case isFn(layout.value):
+
+    case isComp(component):
+      return component
+
+    case isFn(component):
       return defineAsyncComponent({
-        loader: layout.value,
-        loadingComponent: h('div', {}, 'loading'),
+        ...options,
+        suspensible: false,
+        loader: component,
       })
-    case isComp(layout.value):
-      return layout.value
+
     default:
       return undefined
   }
-})
+}
 </script>
 
 <template>
-  <Layout v-if="layout">
+  <RouterLayout v-if="layout">
     <RouterView />
-  </Layout>
+  </RouterLayout>
   <RouterView v-else />
 
   <DevtoolsVueQuery />
