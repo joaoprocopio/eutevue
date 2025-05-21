@@ -2,20 +2,29 @@
 import { computed, defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
 
-const route = useRoute()
-const layoutFn = computed(() => route.meta.layoutFn)
+import { isComp, isFn, isNil } from '~/utils/is'
 
-const Layout = computed(() =>
-  layoutFn.value
-    ? defineAsyncComponent({
-        loader: layoutFn.value,
+const route = useRoute()
+const layout = computed(() => route.meta.layout)
+const Layout = computed(() => {
+  switch (true) {
+    case isNil(layout.value):
+      return undefined
+    case isFn(layout.value):
+      return defineAsyncComponent({
+        loader: layout.value,
+        suspensible: true,
       })
-    : undefined,
-)
+    case isComp(layout.value):
+      return layout.value
+    default:
+      return undefined
+  }
+})
 </script>
 
 <template>
-  <Layout v-if="layoutFn">
+  <Layout v-if="layout">
     <RouterView />
   </Layout>
   <RouterView v-else />
