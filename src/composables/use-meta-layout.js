@@ -7,9 +7,9 @@ export function useMetaLayout() {
   const route = useRoute()
 
   const RouterLayout = computed(() =>
-    safeExtractComponent(route.meta.layout, {
-      loadingComponent: safeExtractComponent(route.meta.layoutLoading),
-      errorComponent: safeExtractComponent(route.meta.layoutError),
+    safeGetComp(route.meta.layout, {
+      loadingComponent: safeGetComp(route.meta.layoutLoading),
+      errorComponent: safeGetComp(route.meta.layoutError),
     }),
   )
 
@@ -21,24 +21,27 @@ export function useMetaLayout() {
  *    - funções para lazy import (`async (...) => await import(...)`);
  *    - componentes importados, serão "short-circuitados" para serem renderizados diretamente;
  *    - `undefined` ou `null` para caso você queira ocultar o layout para a determinada rota.
+ *
+ * O que ela retorna é um componente ou undefined.
+ *
  * @param {Omit<import("vue").AsyncComponentOptions, "loader" | "suspensible">} options
  */
-function safeExtractComponent(component, options = {}) {
-  switch (true) {
-    case isNil(component):
-      return undefined
-
-    case isComp(component):
-      return component
-
-    case isFn(component):
-      return defineAsyncComponent({
-        ...options,
-        suspensible: false,
-        loader: component,
-      })
-
-    default:
-      return undefined
+function safeGetComp(comp, options = {}) {
+  if (isNil(comp)) {
+    return undefined
   }
+
+  if (isComp(comp)) {
+    return comp
+  }
+
+  if (isFn(comp)) {
+    return defineAsyncComponent({
+      ...options,
+      suspensible: false,
+      loader: comp,
+    })
+  }
+
+  return undefined
 }
