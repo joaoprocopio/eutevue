@@ -3,7 +3,7 @@ export function isNil(value) {
 }
 
 export function isComp(value) {
-  return !isNil(value) && typeof value?.render === 'function'
+  return !isNil(value) && isFn(value?.render)
 }
 
 export function isFn(value) {
