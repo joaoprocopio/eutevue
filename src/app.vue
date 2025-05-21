@@ -1,7 +1,8 @@
 <script setup>
-import { computed, defineAsyncComponent } from 'vue'
+import { computed, defineAsyncComponent, h } from 'vue'
 import { useRoute } from 'vue-router'
 
+import DevtoolsVueQuery from '~/components/devtools/vue-query'
 import { isComp, isFn, isNil } from '~/utils/is'
 
 const route = useRoute()
@@ -13,7 +14,7 @@ const Layout = computed(() => {
     case isFn(layout.value):
       return defineAsyncComponent({
         loader: layout.value,
-        suspensible: true,
+        loadingComponent: h('div', {}, 'loading'),
       })
     case isComp(layout.value):
       return layout.value
@@ -28,4 +29,6 @@ const Layout = computed(() => {
     <RouterView />
   </Layout>
   <RouterView v-else />
+
+  <DevtoolsVueQuery />
 </template>

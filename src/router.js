@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import { HomePageName } from '~/constants/routes'
-import defaultLayout from '~/layouts/default-layout'
 
 /** @type {import("vue-router").RouteRecordRaw[]} */
 const routes = [
@@ -10,8 +9,7 @@ const routes = [
     name: HomePageName,
     component: () => import('~/pages/home-page'),
     meta: {
-      // layout: () => import('~/layouts/default-layout'),
-      layout: defaultLayout,
+      layout: () => import('~/layouts/default-layout'),
     },
   },
 ]
