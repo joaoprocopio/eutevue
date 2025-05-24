@@ -3,15 +3,16 @@
     <RouterView />
   </RouterLayout>
   <RouterView v-else />
-  <DevtoolsVueQuery />
+
+  <VueQueryDevtools />
 </template>
 
 <script setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
-import DevtoolsVueQuery from '~/components/devtools/vue-query'
-import { useMetaLayout } from '~/composables/use-meta-layout'
+import { VueQueryDevtools } from '~/lib/query/devtools'
+import { useMetaLayout } from '~/lib/router/composables'
 
 const route = useRoute()
 const hasLayout = computed(() => Boolean(route.meta.layout))

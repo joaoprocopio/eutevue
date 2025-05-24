@@ -4,7 +4,7 @@ import { VueQueryPlugin } from '@tanstack/vue-query'
 import { createApp } from 'vue'
 
 import App from '~/app.vue'
-import { router } from '~/router'
+import { router } from '~/lib/router'
 
 const app = createApp(App)
 

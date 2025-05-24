@@ -2,7 +2,7 @@ import { defineAsyncComponent } from 'vue'
 
 import { env } from '~/env'
 
-export default env.DEV
+export const VueQueryDevtools = env.DEV
   ? defineAsyncComponent(
       async () => (await import('@tanstack/vue-query-devtools')).VueQueryDevtools,
     )
