@@ -4,6 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "clean": "git clean -xdf node_modules dist",
+    "clean:cache": "npm cache clean --force && npm cache verify",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
