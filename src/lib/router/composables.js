@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router'
 
 import { isComp, isFn, isNil } from '~/utils/is'
 
-export function useMetaLayout() {
+export function useRouterLayout() {
   const route = useRoute()
 
   const RouterLayout = computed(() =>

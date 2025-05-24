@@ -12,9 +12,10 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { VueQueryDevtools } from '~/lib/query/devtools'
-import { useMetaLayout } from '~/lib/router/composables'
+import { useRouterLayout } from '~/lib/router/composables'
 
 const route = useRoute()
-const RouterLayout = useMetaLayout()
+const RouterLayout = useRouterLayout()
+
 const hasLayout = computed(() => Boolean(route.meta.layout))
 </script>
