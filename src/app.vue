@@ -15,7 +15,6 @@ import { VueQueryDevtools } from '~/lib/query/devtools'
 import { useMetaLayout } from '~/lib/router/composables'
 
 const route = useRoute()
-const hasLayout = computed(() => Boolean(route.meta.layout))
-
 const RouterLayout = useMetaLayout()
+const hasLayout = computed(() => Boolean(route.meta.layout))
 </script>
